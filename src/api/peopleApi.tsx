@@ -25,7 +25,7 @@ const people = [
   { name: "Jacob" },
 ];
 
-export function getAll(canReturnError = false) {
+export function getAll(canReturnError = true) {
   return new Promise((resolve, reject) => {
     if (!canReturnError) {
       resolve(people);

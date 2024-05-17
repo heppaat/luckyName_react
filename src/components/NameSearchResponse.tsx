@@ -3,28 +3,45 @@ const NameSearchResponse = (props: {
     name: string;
     isLucky: boolean;
   };
-  searchAgain: () => void;
+  reject: () => void;
+  accept: () => void;
+  isDuplicate: boolean;
 }) => {
-  const { result, searchAgain } = props;
+  const { result, reject, accept, isDuplicate } = props;
 
   return (
     <>
-      {result && result.isLucky && (
-        <div className="mt-40">
+      {result.isLucky === true && !isDuplicate && (
+        <div className="flex flex-col items-center gap-4 mt-10 px-5">
           <h1>
             Congratulations, {result.name} is a lucky name! You've won a prize.
             Will you accept it?
           </h1>
-          <button>Accept</button>
-          <button>Reject</button>
+          <button onClick={accept} className="border-2 px-2 py-1">
+            Accept
+          </button>
+          <button onClick={reject} className="border-2 px-2 py-1">
+            Reject
+          </button>
         </div>
       )}
-      {result && result.isLucky === false && (
-        <div className="mt-40">
+
+      {isDuplicate && (
+        <div className="flex flex-col items-center gap-4 mt-10 px-5">
+          <h1>
+            I'm sorry, {result.name} has already received their prize today!
+          </h1>
+        </div>
+      )}
+
+      {result.isLucky === false && (
+        <div className="flex flex-col items-center gap-4 mt-10 px-5">
           <h1>
             I'm sorry, {result.name} is not in today's list of lucky names.
           </h1>
-          <button onClick={searchAgain}>Ok</button>
+          <button onClick={reject} className="border-2 px-2 py-1">
+            Ok
+          </button>
         </div>
       )}
     </>
